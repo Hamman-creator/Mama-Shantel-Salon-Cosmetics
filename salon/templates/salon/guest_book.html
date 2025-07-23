@@ -1,0 +1,24 @@
+{% extends 'salon/dashboard_base.html' %}
+{% block content %}
+
+<h2 class="section-title">Book Without an Account</h2>
+
+<form action="{% url 'guest_book_hairstyle' hairstyle.id %}" method="POST" class="form">
+  {% csrf_token %}
+
+  <label class="label">Your Name:</label>
+  <input type="text" name="guest_name" class="input-box" required>
+
+  <label class="label">Contact Info (Phone/Email):</label>
+  <input type="text" name="guest_contact" class="input-box" required>
+
+  <label class="label">Preferred Date:</label>
+  <input type="date" name="preferred_date" class="input-box" required>
+
+  <label class="label">Time:</label>
+  <input type="time" name="time" class="input-box" required>
+
+  <button type="submit" class="btn btn-green">Submit Booking</button>
+</form>
+
+{% endblock %}

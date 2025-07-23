@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ingia kwa Mama Shantel</title>
+  <link rel="stylesheet" href="{% static 'salon/login.css' %}">
+</head>
+<body>
+
+  <div class="login-container">
+    
+    <div class="login-image">
+      <img src="{% static 'salon/hair/fc2433b1991df3ac045d98d7d30c9def.jpg' %}" alt="Hairstyle">
+    </div>
+
+    <div class="login-form">
+      <h2>Karibu, Jisajili kwa Mama Shantel</h2>
+
+      {% if form.errors %}
+        <p style="color: red;">Please correct the errors below:</p>
+      {% endif %}
+
+      <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="submit" class="login-button">Signup</button>
+      </form>
+
+      <div class="signup-section">
+        <p>Already have an account?</p>
+        <a href="{% url 'login' %}" class="signup-button">Login</a>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

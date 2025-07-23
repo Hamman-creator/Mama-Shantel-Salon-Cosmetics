@@ -1,0 +1,18 @@
+{% extends 'salon/dashboard_base.html' %}
+{% block content %}
+
+<h2 class="section-title">Book a Hairstyle</h2>
+
+<form method="POST" class="form">
+  {% csrf_token %}
+
+  <label for="preferred_date" class="label">Preferred Date:</label>
+  <input type="date" name="preferred_date" class="input-box" required>
+
+  <label for="time" class="label">Preferred Time:</label>
+  <input type="time" name="time" class="input-box" required>
+
+  <button type="submit" class="btn btn-green">Confirm Booking</button>
+</form>
+
+{% endblock %}

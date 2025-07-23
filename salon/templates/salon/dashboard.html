@@ -1,0 +1,23 @@
+{% extends 'salon/dashboard_base.html' %}
+
+{% block content %}
+<h3>Dashboard Summary</h3>
+
+<h4>Recent Bookings</h4>
+<ul>
+    {% for booking in bookings|slice:":3" %}
+        <li>{{ booking.hairstyle.name }} on {{ booking.date }} at {{ booking.time }}</li>
+    {% empty %}
+        <li>No recent bookings.</li>
+    {% endfor %}
+</ul>
+
+<h4>Recent Orders</h4>
+<ul>
+    {% for order in orders|slice:":3" %}
+        <li>{{ order.product.name }} ×{{ order.quantity }} - {{ order.status }}</li>
+    {% empty %}
+        <li>No recent orders.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

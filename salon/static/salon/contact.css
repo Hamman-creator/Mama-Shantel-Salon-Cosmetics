@@ -1,0 +1,112 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #fff0f5;
+  color: #333;
+}
+
+.contact-page {
+  display: flex;
+  flex-wrap: wrap;
+  min-height: 100vh;
+}
+
+.contact-left,
+.contact-right {
+  flex: 1;
+  padding: 40px;
+  box-sizing: border-box;
+}
+
+.contact-left {
+  background-color: #ffe6f079;
+  background: 
+    linear-gradient(to bottom, rgba(255, 230, 240, 0.76), rgba(255, 230, 240, 0.438)),
+    url('hair/1a25c21e-f029-4e08-811a-0dcab42f58b8.jfif');
+  background-size: cover;
+  background-position: center bottom;
+  background-repeat: no-repeat;
+  color: #b30059;
+}
+
+.contact-left h2 {
+  color: #b30059;
+  margin-bottom: 20px;
+}
+
+.social-links {
+  list-style: none;
+  padding: 0;
+}
+
+.social-links li {
+  margin: 15px 0;
+}
+
+.social-links a {
+  color: #b30059;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.social-links a:hover {
+  color: #ff69b4;
+}
+
+.contact-right h2 {
+  color: #b30059;
+  margin-bottom: 20px;
+}
+
+.contact-form label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: bold;
+  color: #7a004c;
+}
+
+/* Updated input and textarea styles for better visibility */
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 16px;              /* Increased padding */
+  margin-bottom: 20px;
+  font-size: 17px;            /* Increased font size */
+  border: 2px solid #ffc0cb;  /* Thinner border for better style */
+  border-radius: 8px;
+  box-sizing: border-box;
+  background-color: #fff;
+}
+
+.contact-form textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.submit-btn {
+  background-color: #ff69b4;
+  color: white;
+  padding: 14px 24px;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 17px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.submit-btn:hover {
+  background-color: #d9368b;
+}
+
+/* Responsive layout for mobile */
+@media (max-width: 768px) {
+  .contact-page {
+    flex-direction: column;
+  }
+
+  .contact-left,
+  .contact-right {
+    width: 100%;
+  }
+}

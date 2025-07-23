@@ -1,0 +1,24 @@
+<!-- salon/templates/salon/update_account.html -->
+
+{% extends 'salon/dashboard_base.html' %}
+{% load static %}
+
+{% block content %}
+  <h2>Update Account</h2>
+
+  <form method="POST">
+    {% csrf_token %}
+
+    <fieldset>
+      <legend>Account Details</legend>
+      {{ form.as_p }}
+    </fieldset>
+
+    <fieldset>
+      <legend>Change Password</legend>
+      {{ password_form.as_p }}
+    </fieldset>
+
+    <button type="submit">Save Changes</button>
+  </form>
+{% endblock %}

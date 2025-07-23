@@ -1,0 +1,21 @@
+{% extends 'salon/dashboard_base.html' %}
+{% block content %}
+
+<h2 class="section-title">Order Without an Account</h2>
+
+<form action="{% url 'guest_order_product' product.id %}" method="POST" class="form">
+  {% csrf_token %}
+
+  <label class="label">Your Name:</label>
+  <input type="text" name="guest_name" class="input-box" required>
+
+  <label class="label">Contact Info (Phone/Email):</label>
+  <input type="text" name="guest_contact" class="input-box" required>
+
+  <label class="label">Quantity:</label>
+  <input type="number" name="quantity" class="input-box" value="1" min="1" required>
+
+  <button type="submit" class="btn btn-green">Place Order</button>
+</form>
+
+{% endblock %}

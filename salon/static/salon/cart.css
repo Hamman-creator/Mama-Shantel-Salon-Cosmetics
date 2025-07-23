@@ -1,0 +1,118 @@
+/* General Page Styling */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #fff0f5;
+  color: #333;
+}
+
+.menu-centered-menu {
+  background-color: #fff;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+  text-align: center;
+}
+
+.menu-centered-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: inline-block;
+}
+
+.menu-centered-menu ul li {
+  display: inline-block;
+  margin: 0 15px;
+}
+
+.menu-centered-menu ul li a {
+  text-decoration: none;
+  color: #2c3e50;
+  font-weight: bold;
+  font-size: 16px;
+  transition: color 0.3s ease;
+}
+
+.menu-centered-menu ul li a:hover {
+  color: #d9368b;
+}
+
+
+.container {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+  color: #E91E63;
+  margin-bottom: 30px;
+}
+
+/* Cart Items */
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* Remove Button */
+form button[type="submit"] {
+  color: red;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* Sticky Checkout Button */
+.sticky-checkout {
+  position: fixed;
+  right: 20px;
+  bottom: 30px;
+  background-color: #E91E63;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 30px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  z-index: 1000;
+  transition: transform 0.2s ease;
+}
+
+.sticky-checkout:hover {
+  transform: scale(1.05);
+}
+
+/* Empty Cart Message */
+p {
+  text-align: center;
+  font-size: 16px;
+  color: #777;
+}
+
+/* Mobile Responsiveness */
+@media screen and (max-width: 600px) {
+  .container {
+    padding: 15px;
+  }
+
+  .sticky-checkout {
+    right: 10px;
+    bottom: 20px;
+    font-size: 14px;
+    padding: 10px 16px;
+  }
+}

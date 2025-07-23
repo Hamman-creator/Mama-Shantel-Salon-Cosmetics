@@ -1,0 +1,67 @@
+{%load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mama Shantel Hair Salon</title>
+  <link rel="stylesheet" href="{%static 'salon/landing.css'%}">
+</head>
+<body>
+  <header>
+    <h1>Mama Shantel Hair Salon and Cosmetics</h1>
+    <p class="tagline">Karibu kwa mama shantel, turuhusu tukufanye kupendeza.</p>
+  </header>
+
+  <section class="top-section">
+    <div class="image-stack">
+      <img src="{% static 'hair/Dreadlocks Styles For Ladies 2021 _ Gorgeous….jfif' %}" alt="Style 1">
+      <img src="{% static 'hair/Pin on Dreadlock hairstyles.jfif' %}" alt="Style 2">
+      <img src="{% static 'hair/Elevate your style with feed-in high ponytails… (1).jfif' %}" alt="Style 3">
+      <img src="{% static 'hair/10 Short Haircuts For Black Women In 2025….jfif' %}" alt="Style 4">
+    </div>
+
+    <nav class="menu">
+      <ul>
+        <li><a href="{% url 'products'%}">Products Gallery</a></li>
+        <li><a href="{% url 'hairs'%}">Hair Gallery</a></li>
+        <li><a href="{% url 'login' %}">Signup/Login</a></li>
+        <li><a href="{% url 'contact'%}">Contact</a></li>
+      </ul>
+    </nav>
+  </section>
+
+
+  <section class="image-gallery">
+    <div class="image-card">
+      <img src="{% static 'hair/Short Hair and Workout-Ready Styles_ Active….jfif'%}" alt="Hair Style 1">
+      <div class="overlay">Trendy Braids - Our most booked style!</div>
+      <h3>Trendy Braids</h3>
+      <p>Perfect for all occasions</p>
+    </div>
+    <div class="image-card">
+      <img src="{% static 'hair/948b4c020e44d0a846dec7cbecd2fd26.jpg'%}" alt="Hair Style 2">
+      <div class="overlay">Natural Curls - Enhance your natural beauty</div>
+      <h3>Natural Curls</h3>
+      <p>Soft, full look</p>
+    </div>
+    <div class="image-card">
+      <img src="{% static 'hair/45f179682a4d2c4ac0e3ac8d159dad03.jpg' %}" alt="Hair Style 3">
+      <div class="overlay">Locs & Twists - Bold and beautiful</div>
+      <h3>Locs & Twists</h3>
+      <p>Lasts long, low maintenance</p>
+    </div>
+  </section>
+
+  <footer>
+    <p>Follow us on:</p>
+    <a href="#">Facebook</a> | 
+    <a href="#">Instagram</a> | 
+    <a href="#">WhatsApp</a>
+  </footer>
+  <a href="https://wa.me/+254726658111" class="whatsapp-float" target="_blank">
+  <img src="https://img.icons8.com/color/48/000000/whatsapp--v1.png" alt="Chat on WhatsApp" />
+</a>
+
+</body>
+</html>

@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Confirm Cart - Mama Shantel</title>
+    <link rel="stylesheet" href="{% static 'salon/confirm_cart.css' %}">
+</head>
+<body>
+    <div class="summary-box">
+        <h2>Order Summary</h2>
+
+        <div class="summary-line"><strong>Total Items:</strong> {{ total_items }}</div>
+        <div class="summary-line"><strong>Total Cost:</strong> KSh {{ total_price }}</div>
+
+        <form method="post">
+            {% csrf_token %}
+            {% if form %}
+                <input type="text" name="guest_name" placeholder="Your Full Name" required>
+                <input type="tel" name="guest_phone" placeholder="Phone Number" required>
+                <input type="text" name="guest_location" placeholder="Your Location" required>
+            {% endif %}
+            <button type="submit">Confirm & Submit</button>
+        </form>
+    </div>
+</body>
+</html>

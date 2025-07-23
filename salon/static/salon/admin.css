@@ -1,0 +1,21 @@
+/* Mama Shantel Theme */
+body.login, .module, .dashboard-module, .grp-module {
+    background-color: #ffe6f079; /* light pink background */
+}
+
+#header, .module caption, .button.default {
+    background-color: #cc0066 !important; /* Mama Shantel pink */
+    color: #cc0066 !important;
+}
+
+a, .button {
+    color: #cc0066;
+}
+
+input, select, textarea {
+    border: 1px solid #cc0066;
+}
+
+.button.default {
+    border-radius: 8px;
+}

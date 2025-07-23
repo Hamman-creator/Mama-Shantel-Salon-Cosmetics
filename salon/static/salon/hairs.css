@@ -1,0 +1,160 @@
+/* Base Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #fffaf7;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* Sticky Top Navigation Menu */
+.main-menu {
+  background: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  padding: 10px 0;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.main-menu ul {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+}
+
+.main-menu ul li {
+  margin: 0 20px;
+}
+
+.main-menu ul li a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+.main-menu ul li a:hover {
+  color: #d9368b;
+}
+
+/* Page Header */
+.product-header {
+  text-align: center;
+  padding: 40px 20px 20px;
+  background: #f8f9fa;
+}
+
+.product-header h1 {
+  font-size: 2.5rem;
+  color: #218c74;
+}
+
+.product-header .tagline {
+  font-style: italic;
+  color: #666;
+  margin-top: 10px;
+}
+
+/* Product Grid Section */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  padding: 30px 5%;
+}
+
+.product-card {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  overflow: hidden;
+  transition: transform 0.3s;
+}
+
+.product-card:hover {
+  transform: scale(1.03);
+}
+
+.product-card img {
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+}
+
+.product-card h2 {
+  font-size: 1.4rem;
+  color: #b30059;
+  margin: 10px 15px 5px;
+}
+
+.product-card .price {
+  color: #ff1493;
+  font-weight: bold;
+  margin: 0 15px;
+}
+
+.product-card .description {
+  font-size: 0.95rem;
+  color: #555;
+  margin: 10px 15px;
+  height: 60px;
+  overflow-y: auto;
+}
+
+/* Book Button */
+.product-button {
+  display: block;
+  width: 90%;
+  margin: 15px auto 20px;
+  padding: 10px;
+  background-color: #ff69b4;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.product-button:hover {
+  background-color: #d9368b;
+}
+
+/* WhatsApp Floating Icon */
+.whatsapp-float {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 999;
+  width: 48px;
+  height: 48px;
+  background-color: transparent;
+}
+
+.whatsapp-float img {
+  width: 100%;
+  height: auto;
+}
+
+/* Responsive Tweak */
+@media (max-width: 600px) {
+  .product-header h1 {
+    font-size: 2rem;
+  }
+
+  .main-menu ul {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .main-menu ul li {
+    margin: 10px 0;
+  }
+}

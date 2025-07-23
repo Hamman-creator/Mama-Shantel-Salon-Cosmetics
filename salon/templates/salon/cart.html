@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Cart - Mama Shantel Salon</title>
+    <link rel="stylesheet" href="{% static 'salon/cart.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <div class="container">
+        <h1>Your Cart</h1>
+                <nav class="menu-centered-menu">
+                    <ul>
+                    <li><a href="{% url 'landing' %}">Back to Home</a></li>
+                    <li><a href="{% url 'hairs' %}">Hair Gallery</a></li>
+                    <li><a href="{% url 'products' %}"> Products</a></li>
+                    </ul>
+                </nav>
+
+        {% if items %}
+            <ul>
+                {% for item in items %}
+                    <li style="margin-bottom: 15px;">
+                        {% if item.product %}
+                            <strong>Product:</strong> {{ item.product.name }}<br>
+                            <strong>Quantity:</strong> {{ item.quantity }}
+                        {% elif item.hairstyle %}
+                            <strong>Hairstyle:</strong> {{ item.hairstyle.name }}<br>
+                            <strong>Preferred Date:</strong> {{ item.preferred_date }}
+                        {% endif %}
+
+                        <!-- Remove from cart button -->
+                        <form method="post" action="{% url 'remove_from_cart' item.id %}" style="margin-top: 5px;">
+                            {% csrf_token %}
+                            <button type="submit" style="color: red; background: none; border: none; cursor: pointer;">
+                                ❌ Remove
+                            </button>
+                        </form>
+                    </li>
+                {% endfor %}
+            </ul>
+
+            <!-- Proceed to checkout button -->
+            <form action="{% url 'confirm_cart' %}" method="get">
+                <button type="submit" class="sticky-checkout">
+                        Proceed to Checkout
+                </button>
+            </form>
+
+        {% else %}
+            <p>Your cart is currently empty.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

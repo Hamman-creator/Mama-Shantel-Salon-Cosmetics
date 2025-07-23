@@ -1,0 +1,24 @@
+{% extends 'salon/dashboard_base.html' %}
+
+{% block content %}
+<h3>My Orders</h3>
+
+<table>
+    <tr>
+        <th>Product</th>
+        <th>Quantity</th>
+        <th>Status</th>
+        <th>Ordered On</th>
+    </tr>
+    {% for order in orders %}
+    <tr>
+        <td>{{ order.product.name }}</td>
+        <td>{{ order.quantity }}</td>
+        <td>{{ order.status }}</td>
+        <td>{{ order.date_ordered }}</td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="4">You have no product orders yet.</td></tr>
+    {% endfor %}
+</table>
+{% endblock %}

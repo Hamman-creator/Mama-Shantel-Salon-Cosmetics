@@ -1,0 +1,166 @@
+/* General styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background-color: #fff0f5;
+  color: #333;
+}
+
+/* Header */
+.product-header {
+  text-align: center;
+  padding: 30px 20px 10px;
+  background-color: #ffc0cb;
+}
+
+.product-header h1 {
+  margin: 0;
+  font-size: 32px;
+  color: #b30059;
+}
+
+.tagline {
+  font-style: italic;
+  font-size: 18px;
+  color: #7a004c;
+}
+
+/* Menu Styles */
+.menu-centered-menu {
+  background-color: #fff;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+  text-align: center;
+}
+
+.menu-centered-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: inline-block;
+}
+
+.menu-centered-menu ul li {
+  display: inline-block;
+  margin: 0 15px;
+}
+
+.menu-centered-menu ul li a {
+  text-decoration: none;
+  color: #2c3e50;
+  font-weight: bold;
+  font-size: 16px;
+  transition: color 0.3s ease;
+}
+
+.menu-centered-menu ul li a:hover {
+  color: #d9368b;
+}
+
+/* Product Grid */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  padding: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.product-card {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  text-align: center;
+  transition: transform 0.3s;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+}
+
+.product-card img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.product-card h2 {
+  font-size: 18px;
+  margin: 10px 0 5px;
+  color: #b30059;
+}
+
+.price {
+  font-weight: bold;
+  color: #ff1493;
+  margin: 5px 0;
+}
+
+.description {
+  font-size: 14px;
+  color: #444;
+  margin: 5px 0 10px;
+}
+
+.product-button {
+  display: inline-block;
+  padding: 8px 16px;
+  background-color: #ff69b4;
+  color: white;
+  border-radius: 5px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.product-button:hover {
+  background-color: #d9368b;
+}
+
+/* WhatsApp floating icon */
+.whatsapp-float {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 999;
+}
+
+.whatsapp-float img {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  transition: transform 0.3s;
+}
+
+.whatsapp-float img:hover {
+  transform: scale(1.1);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .product-header h1 {
+    font-size: 24px;
+  }
+
+  .tagline {
+    font-size: 16px;
+  }
+
+  .product-card {
+    padding: 10px;
+  }
+
+  .menu-centered-menu ul {
+    display: block;
+  }
+
+  .menu-centered-menu ul li {
+    display: block;
+    margin: 10px 0;
+  }
+}
