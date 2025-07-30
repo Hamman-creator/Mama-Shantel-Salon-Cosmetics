@@ -38,7 +38,6 @@ body {
   color: #d9368b;
 }
 
-
 .container {
   max-width: 700px;
   margin: 0 auto;
@@ -103,6 +102,84 @@ p {
   color: #777;
 }
 
+/* Input Fields for Date and Location */
+.cart-input-section {
+  margin-top: 10px;
+}
+
+.cart-input-section label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #d9368b;
+}
+
+.cart-input-section input[type="text"],
+.cart-input-section input[type="date"] {
+  width: 100%;
+  max-width: 300px;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #fffafc;
+  transition: border-color 0.3s ease-in-out;
+  margin-bottom: 15px;
+}
+
+.cart-input-section input[type="text"]:focus,
+.cart-input-section input[type="date"]:focus {
+  border-color: #E91E63;
+  background-color: #fff;
+  outline: none;
+}
+/* WhatsApp floating icon */
+.whatsapp-float {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 999;
+}
+
+.whatsapp-float img {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  transition: transform 0.3s;
+}
+
+.whatsapp-float img:hover {
+  transform: scale(1.1);
+}
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+/* Footer Styling */
+footer {
+  background-color: #ffc0cb; /* light pink */
+  text-align: center;
+  padding: 15px;
+  width: 100%;
+  box-sizing: border-box;
+  color: #b30059; /* dark pink for text */
+}
+
+footer a {
+  color: #b30059;
+  text-decoration: none;
+  margin: 0 10px;
+}
+
 /* Mobile Responsiveness */
 @media screen and (max-width: 600px) {
   .container {
@@ -114,5 +191,10 @@ p {
     bottom: 20px;
     font-size: 14px;
     padding: 10px 16px;
+  }
+
+  .cart-input-section input[type="text"],
+  .cart-input-section input[type="date"] {
+    max-width: 100%;
   }
 }

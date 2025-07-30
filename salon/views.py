@@ -6,6 +6,7 @@ from .models import Booking, Order,ContactMessage,Product,Hairstyle,CartItem
 from django.contrib.auth.forms import UserChangeForm, PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
 from django.utils import timezone
+from django.utils.dateparse import parse_date, parse_time
 
 
 def landing_page(request):
@@ -45,14 +46,35 @@ def custom_logout(request):
     logout(request)
     return redirect('login')
 
+
+
 @login_required
 def dashboard(request):
     bookings = Booking.objects.filter(customer=request.user).order_by('-date_booked')
     orders = Order.objects.filter(customer=request.user).order_by('-date_ordered')
+
+    total_bookings = bookings.count()
+    total_orders = orders.count()
+
+    # Add status-based counts
+    pending_bookings = bookings.filter(status='Pending').count()
+    completed_bookings = bookings.filter(status='Completed').count()
+
+    pending_orders = orders.filter(status='Pending').count()
+    completed_orders = orders.filter(status='Completed').count()
+
     return render(request, 'salon/dashboard.html', {
         'bookings': bookings,
         'orders': orders,
+        'total_bookings': total_bookings,
+        'total_orders': total_orders,
+        'pending_bookings': pending_bookings,
+        'completed_bookings': completed_bookings,
+        'pending_orders': pending_orders,
+        'completed_orders': completed_orders,
     })
+
+
 
 @login_required
 def user_bookings_view(request):
@@ -214,20 +236,46 @@ def add_to_cart(request, item_type, item_id):
 
 def view_cart(request):
     session_key = get_or_create_session_key(request)
-    
+
     if request.user.is_authenticated:
         items = CartItem.objects.filter(user=request.user)
     else:
         items = CartItem.objects.filter(session_key=session_key)
 
+    if request.method == 'POST':
+        print("==== POST received ====")
+        for item in items:
+            location = request.POST.get(f'location_{item.id}')
+            preferred_date = request.POST.get(f'preferred_date_{item.id}')
+            time = request.POST.get(f'time_{item.id}')
+
+            if location:
+                item.guest_location = location
+            if preferred_date:
+                item.preferred_date = preferred_date
+            if time:
+                item.time = time
+            item.save()
+
+        return redirect('confirm_cart')
+
     return render(request, 'salon/cart.html', {'items': items})
+
+
+
+
+
+from .utils import get_or_create_session_key
+from django.utils.dateparse import parse_date, parse_time
+from .models import CartItem, Order, Booking
+from .forms import GuestCheckoutForm
+from django.shortcuts import render, redirect
 
 
 def confirm_cart(request):
     session_key = get_or_create_session_key(request)
     items = CartItem.objects.filter(user=request.user) if request.user.is_authenticated else CartItem.objects.filter(session_key=session_key)
 
-    # === Calculate total price and total item count ===
     total_price = 0
     total_items = 0
     for item in items:
@@ -239,46 +287,87 @@ def confirm_cart(request):
             total_items += 1
 
     if request.method == 'POST':
-        form = GuestCheckoutForm(request.POST) if not request.user.is_authenticated else None
+        # Update fields
+        for item in items:
+            if item.product:
+                location_value = request.POST.get(f'location_{item.id}')
+                if location_value:
+                    item.guest_location = location_value
+            elif item.hairstyle:
+                date_val = request.POST.get(f'preferred_date_{item.id}')
+                time_val = request.POST.get(f'time_{item.id}')
+                if date_val:
+                    item.preferred_date = parse_date(date_val)
+                if time_val:
+                    item.time = parse_time(time_val)
+            item.save()
 
-        if request.user.is_authenticated or (form and form.is_valid()):
-            guest_name = form.cleaned_data['guest_name'] if form else None
-            guest_contact = form.cleaned_data['guest_contact'] if form else None
-
+        if request.user.is_authenticated:
             for item in items:
                 if item.product:
                     Order.objects.create(
-                        customer=request.user if request.user.is_authenticated else None,
+                        customer=request.user,
                         product=item.product,
                         quantity=item.quantity,
-                        is_guest=not request.user.is_authenticated,
-                        guest_name=guest_name,
-                        guest_contact=guest_contact
+                        is_guest=False
                     )
                 elif item.hairstyle:
                     Booking.objects.create(
-                        customer=request.user if request.user.is_authenticated else None,
+                        customer=request.user,
                         hairstyle=item.hairstyle,
                         preferred_date=item.preferred_date,
-                        is_guest=not request.user.is_authenticated,
-                        guest_name=guest_name,
-                        guest_contact=guest_contact
+                        time=item.time,
+                        is_guest=False
                     )
-            items.delete()
-            return redirect('dashboard')  # You can redirect to a thank-you page instead
+        else:
+            form = GuestCheckoutForm(request.POST)
+            if form.is_valid():
+                guest_name = form.cleaned_data['guest_name']
+                guest_contact = form.cleaned_data['guest_contact']
+                for item in items:
+                    if item.product:
+                        Order.objects.create(
+                            customer=None,
+                            product=item.product,
+                            quantity=item.quantity,
+                            is_guest=True,
+                            guest_name=guest_name,
+                            guest_contact=guest_contact,
+                            guest_location=item.guest_location
+                        )
+                    elif item.hairstyle:
+                        Booking.objects.create(
+                            customer=None,
+                            hairstyle=item.hairstyle,
+                            preferred_date=item.preferred_date,
+                            time=item.time,
+                            is_guest=True,
+                            guest_name=guest_name,
+                            guest_contact=guest_contact
+                        )
+            else:
+                return render(request, 'salon/confirm_cart.html', {
+                    'items': items,
+                    'form': form,
+                    'total_price': total_price,
+                    'total_items': total_items,
+                })
+
+        items.delete()
+        if request.user.is_authenticated:
+            return redirect('dashboard')  # Replace with your actual dashboard URL name
+        else:
+            return redirect('thank_you')
 
     else:
         form = GuestCheckoutForm() if not request.user.is_authenticated else None
 
-    # === Pass totals to the template ===
     return render(request, 'salon/confirm_cart.html', {
         'items': items,
         'form': form,
         'total_price': total_price,
         'total_items': total_items,
     })
-
-
 
 
 
@@ -295,6 +384,12 @@ def remove_from_cart(request, item_id):
         pass  # silently ignore errors
 
     return redirect('view_cart')
+
+
+
+def thank_you(request):
+    return render(request, 'salon/thank_you.html')
+
 
 
 

@@ -1,23 +1,50 @@
 {% extends 'salon/dashboard_base.html' %}
 
 {% block content %}
-<h3>Dashboard Summary</h3>
+<h3 style="margin-bottom: 20px;">Summary</h3>
 
-<h4>Recent Bookings</h4>
-<ul>
+<!-- Statistics Summary Section -->
+<div style="display: flex; gap: 20px; margin-bottom: 30px; flex-wrap: wrap;">
+
+    <div style="background-color: #e0f7e9; padding: 20px; border-radius: 10px; flex: 1; min-width: 250px;">
+        <h4 style="margin: 0;">Total Bookings</h4>
+        <p style="font-size: 2rem; color: green; margin: 10px 0 5px;">{{ total_bookings }}</p>
+        <p style="margin: 0;">Pending: <strong style="color: orange;">{{ pending_bookings }}</strong></p>
+        <p style="margin: 0;">Completed: <strong style="color: green;">{{ completed_bookings }}</strong></p>
+    </div>
+
+    <div style="background-color: #ede7f6; padding: 20px; border-radius: 10px; flex: 1; min-width: 250px;">
+        <h4 style="margin: 0;">Total Orders</h4>
+        <p style="font-size: 2rem; color: purple; margin: 10px 0 5px;">{{ total_orders }}</p>
+        <p style="margin: 0;">Pending: <strong style="color: orange;">{{ pending_orders }}</strong></p>
+        <p style="margin: 0;">Completed: <strong style="color: purple;">{{ completed_orders }}</strong></p>
+    </div>
+
+</div>
+
+
+<!-- Recent Bookings -->
+<h4 style="margin-top: 30px;">Recent Bookings</h4>
+<ul style="list-style: none; padding: 0;">
     {% for booking in bookings|slice:":3" %}
-        <li>{{ booking.hairstyle.name }} on {{ booking.date }} at {{ booking.time }}</li>
+        <li style="background: #f9f9f9; margin-bottom: 10px; padding: 10px; border-radius: 5px;">
+            {{ booking.hairstyle.name }} on {{ booking.preferred_date }} at {{ booking.time }}
+        </li>
     {% empty %}
         <li>No recent bookings.</li>
     {% endfor %}
 </ul>
 
-<h4>Recent Orders</h4>
-<ul>
+<!-- Recent Orders -->
+<h4 style="margin-top: 30px;">Recent Orders</h4>
+<ul style="list-style: none; padding: 0;">
     {% for order in orders|slice:":3" %}
-        <li>{{ order.product.name }} ×{{ order.quantity }} - {{ order.status }}</li>
+        <li style="background: #f9f9f9; margin-bottom: 10px; padding: 10px; border-radius: 5px;">
+            {{ order.product.name }} ×{{ order.quantity }} - {{ order.status }}
+        </li>
     {% empty %}
         <li>No recent orders.</li>
     {% endfor %}
 </ul>
 {% endblock %}
+

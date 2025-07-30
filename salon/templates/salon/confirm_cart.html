@@ -15,12 +15,48 @@
         <form method="post">
             {% csrf_token %}
             {% if form %}
-                <input type="text" name="guest_name" placeholder="Your Full Name" required>
-                <input type="tel" name="guest_phone" placeholder="Phone Number" required>
-                <input type="text" name="guest_location" placeholder="Your Location" required>
+                {{ form.non_field_errors }}
+
+                <div>
+                    {{ form.guest_name.label_tag }}<br>
+                    {{ form.guest_name }}
+                    {{ form.guest_name.errors }}
+                </div>
+
+                <div>
+                    {{ form.guest_contact.label_tag }}<br>
+                    {{ form.guest_contact }}
+                    {{ form.guest_contact.errors }}
+                </div>
+
+                {% if form.guest_location %}
+                    <div>
+                        {{ form.guest_location.label_tag }}<br>
+                        {{ form.guest_location }}
+                        {{ form.guest_location.errors }}
+                    </div>
+                {% endif %}
+
+                {% if form.preferred_time %}
+                    <div>
+                        {{ form.preferred_time.label_tag }}<br>
+                        {{ form.preferred_time }}
+                        {{ form.preferred_time.errors }}
+                    </div>
+                {% endif %}
             {% endif %}
+
             <button type="submit">Confirm & Submit</button>
         </form>
     </div>
 </body>
+<footer class="footer">
+    <p>Follow us on:</p>
+    <a href="#">Facebook</a> | 
+    <a href="#">Instagram</a> | 
+    <a href="#">WhatsApp</a>
+  </footer>
+<a href="https://wa.me/+254726658111" class="whatsapp-float" target="_blank">
+  <img src="https://img.icons8.com/color/48/000000/whatsapp--v1.png" alt="Chat on WhatsApp" />
+</a>
 </html>

@@ -1,24 +1,40 @@
 {% extends 'salon/dashboard_base.html' %}
 
 {% block content %}
-<h3>My Orders</h3>
+<h3 style="margin-bottom: 20px;">My Orders</h3>
 
-<table>
-    <tr>
-        <th>Product</th>
-        <th>Quantity</th>
-        <th>Status</th>
-        <th>Ordered On</th>
-    </tr>
-    {% for order in orders %}
-    <tr>
-        <td>{{ order.product.name }}</td>
-        <td>{{ order.quantity }}</td>
-        <td>{{ order.status }}</td>
-        <td>{{ order.date_ordered }}</td>
-    </tr>
-    {% empty %}
-    <tr><td colspan="4">You have no product orders yet.</td></tr>
-    {% endfor %}
-</table>
+<div style="overflow-x: auto;">
+    <table style="width: 100%; border-collapse: separate; border-spacing: 0 10px; font-size: 16px;">
+        <thead>
+            <tr style="background-color: #f0f0f0;">
+                <th style="padding: 12px 15px; text-align: left;">Product</th>
+                <th style="padding: 12px 15px; text-align: left;">Quantity</th>
+                <th style="padding: 12px 15px; text-align: left;">Status</th>
+                <th style="padding: 12px 15px; text-align: left;">Ordered On</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+            <tr style="background: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+                <td style="padding: 12px 15px;">{{ order.product.name }}</td>
+                <td style="padding: 12px 15px;">{{ order.quantity }}</td>
+                <td style="padding: 12px 15px;">
+                    {% if order.status == 'Completed' %}
+                        <span style="background-color: #d4edda; color: #155724; padding: 4px 10px; border-radius: 5px;">Completed</span>
+                    {% elif order.status == 'Pending' %}
+                        <span style="background-color: #fff3cd; color: #856404; padding: 4px 10px; border-radius: 5px;">Pending</span>
+                    {% else %}
+                        {{ order.status }}
+                    {% endif %}
+                </td>
+                <td style="padding: 12px 15px;">{{ order.date_ordered }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4" style="padding: 15px; text-align: center;">You have no product orders yet.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock %}

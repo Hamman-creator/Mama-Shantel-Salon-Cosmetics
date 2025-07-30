@@ -66,7 +66,39 @@
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
 
-        @media (max-width: 768px) {
+        /* FOOTER */
+/* Apply Flexbox layout to ensure sticky footer */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+/* Footer Styling */
+footer {
+  background-color: #ffc0cb; /* light pink */
+  text-align: center;
+  padding: 15px;
+  width: 100%;
+  box-sizing: border-box;
+  color: #b30059; /* dark pink for text */
+}
+
+footer a {
+  color: #b30059;
+  text-decoration: none;
+  margin: 0 10px;
+}
+
+
+
+ @media (max-width: 768px) {
             .sidebar {
                 width: 100%;
                 height: auto;

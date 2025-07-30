@@ -8,49 +8,65 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-    <div class="container">
-        <h1>Your Cart</h1>
-                <nav class="menu-centered-menu">
-                    <ul>
-                    <li><a href="{% url 'landing' %}">Back to Home</a></li>
-                    <li><a href="{% url 'hairs' %}">Hair Gallery</a></li>
-                    <li><a href="{% url 'products' %}"> Products</a></li>
-                    </ul>
-                </nav>
+<div class="container">
+    <h1>Your Cart</h1>
+    <nav class="menu-centered-menu">
+        <ul>
+            <li><a href="{% url 'landing' %}">Back to Home</a></li>
+            <li><a href="{% url 'hairs' %}">Hair Gallery</a></li>
+            <li><a href="{% url 'products' %}">Products</a></li>
+        </ul>
+    </nav>
 
-        {% if items %}
+    {% if items %}
+        <!-- Cart Update Form -->
+        <form method="POST" action="{% url 'confirm_cart' %}">
+            {% csrf_token %}
             <ul>
                 {% for item in items %}
-                    <li style="margin-bottom: 15px;">
+                    <li style="margin-bottom: 25px;">
                         {% if item.product %}
                             <strong>Product:</strong> {{ item.product.name }}<br>
-                            <strong>Quantity:</strong> {{ item.quantity }}
+                            <strong>Quantity:</strong> {{ item.quantity }}<br>
+                            <label>Delivery Location:</label><br>
+                            <input type="text" name="location_{{ item.id }}" value="{{ item.guest_location|default:'' }}" placeholder="Enter delivery location"><br>
                         {% elif item.hairstyle %}
                             <strong>Hairstyle:</strong> {{ item.hairstyle.name }}<br>
-                            <strong>Preferred Date:</strong> {{ item.preferred_date }}
+                            <label>Preferred Date:</label><br>
+                            <input type="date" name="preferred_date_{{ item.id }}" value="{{ item.preferred_date|default:'' }}"><br>
+                            <label>Preferred Time:</label><br>
+                            <input type="time" name="time_{{ item.id }}" value="{{ item.time|default:'' }}"><br>
                         {% endif %}
-
-                        <!-- Remove from cart button -->
-                        <form method="post" action="{% url 'remove_from_cart' item.id %}" style="margin-top: 5px;">
-                            {% csrf_token %}
-                            <button type="submit" style="color: red; background: none; border: none; cursor: pointer;">
-                                ❌ Remove
-                            </button>
-                        </form>
+                        
+                        <!-- Remove button will submit its own form via JavaScript or external form -->
+                        <button type="submit" form="remove-form-{{ item.id }}" style="color: red; background: none; border: none; cursor: pointer;">
+                            ❌ Remove
+                        </button>
                     </li>
                 {% endfor %}
             </ul>
+            <button type="submit" class="sticky-checkout">Update & Proceed to Checkout</button>
+        </form>
 
-            <!-- Proceed to checkout button -->
-            <form action="{% url 'confirm_cart' %}" method="get">
-                <button type="submit" class="sticky-checkout">
-                        Proceed to Checkout
-                </button>
+        <!-- Remove forms placed outside main form -->
+        {% for item in items %}
+            <form id="remove-form-{{ item.id }}" method="POST" action="{% url 'remove_from_cart' item.id %}" style="display: none;">
+                {% csrf_token %}
             </form>
+        {% endfor %}
 
-        {% else %}
-            <p>Your cart is currently empty.</p>
-        {% endif %}
-    </div>
+    {% else %}
+        <p>Your cart is currently empty.</p>
+    {% endif %}
+</div>
 </body>
+<footer>
+    <p>Follow us on:</p>
+    <a href="#">Facebook</a> | 
+    <a href="#">Instagram</a> | 
+    <a href="#">WhatsApp</a>
+  </footer>
+<a href="https://wa.me/+254726658111" class="whatsapp-float" target="_blank">
+  <img src="https://img.icons8.com/color/48/000000/whatsapp--v1.png" alt="Chat on WhatsApp" />
+</a>
 </html>

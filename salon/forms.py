@@ -46,3 +46,5 @@ class GuestBookingForm(forms.ModelForm):
 class GuestCheckoutForm(forms.Form):
     guest_name = forms.CharField(max_length=100)
     guest_contact = forms.CharField(max_length=100)
+    guest_location = forms.CharField(max_length=255, required=False)
+    preferred_time = forms.TimeField(required=True, widget=forms.TimeInput(attrs={'type': 'time'}))

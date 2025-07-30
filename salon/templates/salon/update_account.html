@@ -1,24 +1,58 @@
-<!-- salon/templates/salon/update_account.html -->
-
 {% extends 'salon/dashboard_base.html' %}
 {% load static %}
 
 {% block content %}
-  <h2>Update Account</h2>
+  <h2 style="margin-bottom: 20px;">Update Account</h2>
 
-  <form method="POST">
+  <form method="POST" style="max-width: 600px; background: #fff; padding: 25px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);">
     {% csrf_token %}
 
-    <fieldset>
-      <legend>Account Details</legend>
-      {{ form.as_p }}
+    <fieldset style="border: none; margin-bottom: 25px;">
+      <legend style="font-weight: bold; margin-bottom: 15px;">Account Details</legend>
+      {% for field in form %}
+        {% if field.name == 'username' %}
+          <div style="display: none;">
+            {{ field.label_tag }} {{ field }}
+          </div>
+        {% else %}
+          <div style="margin-bottom: 15px;">
+            {{ field.label_tag }}<br>
+            {{ field }}
+            {% if field.help_text %}
+              <small style="color: #888;">{{ field.help_text }}</small>
+            {% endif %}
+            {% for error in field.errors %}
+              <p style="color: red;">{{ error }}</p>
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endfor %}
     </fieldset>
 
-    <fieldset>
-      <legend>Change Password</legend>
-      {{ password_form.as_p }}
+    <fieldset style="border: none; margin-bottom: 25px;">
+      <legend style="font-weight: bold; margin-bottom: 15px;">Change Password</legend>
+      {% for field in password_form %}
+        <div style="margin-bottom: 15px;">
+          {{ field.label_tag }}<br>
+          {{ field }}
+          {% if field.help_text %}
+            <small style="color: #888;">
+              {% if 'password' in field.name %}
+                Password must be at least 8 characters.
+              {% else %}
+                {{ field.help_text }}
+              {% endif %}
+            </small>
+          {% endif %}
+          {% for error in field.errors %}
+            <p style="color: red;">{{ error }}</p>
+          {% endfor %}
+        </div>
+      {% endfor %}
     </fieldset>
 
-    <button type="submit">Save Changes</button>
+    <button type="submit" style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer;">
+      Save Changes
+    </button>
   </form>
 {% endblock %}

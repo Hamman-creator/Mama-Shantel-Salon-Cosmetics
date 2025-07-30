@@ -143,6 +143,35 @@ body {
   height: auto;
 }
 
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+/* Footer Styling */
+footer {
+  background-color: #ffc0cb; /* light pink */
+  text-align: center;
+  padding: 15px;
+  width: 100%;
+  box-sizing: border-box;
+  color: #b30059; /* dark pink for text */
+}
+
+footer a {
+  color: #b30059;
+  text-decoration: none;
+  margin: 0 10px;
+}
+
+
 /* Responsive Tweak */
 @media (max-width: 600px) {
   .product-header h1 {

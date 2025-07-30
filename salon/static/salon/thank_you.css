@@ -1,0 +1,55 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #fff5f8;
+    color: #333;
+    text-align: center;
+    padding: 50px 20px;
+}
+
+h2 {
+    color: #e91e63;
+    margin-bottom: 10px;
+}
+
+p {
+    font-size: 18px;
+    margin-bottom: 30px;
+}
+
+.btn-home {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: #e91e63;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.btn-home:hover {
+    background-color: #d81b60;
+}
+
+/* Floating WhatsApp Button */
+.whatsapp-float {
+    position: fixed;
+    width: 60px;
+    height: 60px;
+    bottom: 20px;
+    right: 20px;
+    background-color: #25D366;
+    color: white;
+    border-radius: 50%;
+    text-align: center;
+    font-size: 30px;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+    z-index: 1000;
+}
+
+.whatsapp-float i {
+    line-height: 60px;
+}
+
+.whatsapp-float:hover {
+    background-color: #1ebe5c;
+}

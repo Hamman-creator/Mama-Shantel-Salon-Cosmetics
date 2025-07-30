@@ -11,12 +11,10 @@
 <div class="sidebar">
     <h2>Mama Shantel</h2>
     <a href="{% url 'dashboard' %}">Dashboard</a>
-    <a href="/" target="_blank">View Site</a>
+    <a href="{% url 'hairs' %}" target="_blank">View Site</a>
     <a href="{% url 'user_bookings' %}">My Bookings</a>
     <a href="{% url 'user_orders' %}">My Orders</a>
-    <a href="{% url 'view_cart' %}">
-    🛒 Cart ({{ cart_item_count }})
-</a>
+    <a href="{% url 'view_cart' %}">🛒 Cart ({{ cart_item_count }})</a>
     <a href="{% url 'update_account' %}">Update Account</a>
     <a href="{% url 'logout' %}">Logout</a>
 </div>
@@ -31,4 +29,10 @@
     </div>
 </div>
 </body>
+<footer>
+    <p>Follow us on:</p>
+    <a href="#">Facebook</a> | 
+    <a href="#">Instagram</a> | 
+    <a href="#">WhatsApp</a>
+  </footer>
 </html>
