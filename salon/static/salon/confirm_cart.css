@@ -133,4 +133,12 @@ main {
         font-size: 15px;
         padding: 12px;
     }
+
+    .whatsapp-float {
+    position: fixed;
+    bottom: 110px;
+    right: 40px;
+    font-size: 20px;
+    padding: 10px 12px;
+  }
 }

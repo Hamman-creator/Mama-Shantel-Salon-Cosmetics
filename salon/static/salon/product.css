@@ -4,6 +4,7 @@ body {
   margin: 0;
   background-color: #fff0f5;
   color: #333;
+  overflow-x: hidden;
 }
 
 /* Header */
@@ -191,4 +192,20 @@ footer a {
     display: block;
     margin: 10px 0;
   }
+
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 15px;
+  }
+
+  .whatsapp-float {
+    position: fixed;
+    bottom: 110px;
+    right: 40px;
+    font-size: 20px;
+    padding: 10px 12px;
+  }
 }
+
+  
+

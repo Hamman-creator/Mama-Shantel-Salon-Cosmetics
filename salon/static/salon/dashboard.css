@@ -98,13 +98,45 @@ footer a {
 
 
 
- @media (max-width: 768px) {
-            .sidebar {
-                width: 100%;
-                height: auto;
-                position: relative;
-            }
-            .main {
-                margin-left: 0;
-            }
-        }
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        text-align: center;
+        padding: 10px 0;
+    }
+
+    .sidebar a {
+        display: inline-block;
+        margin: 8px 5px;
+        padding: 8px 10px;
+        font-size: 14px;
+        background-color: #ff85c1;
+    }
+
+    .main {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .topbar {
+        font-size: 16px;
+        padding: 10px;
+        text-align: center;
+    }
+
+    .content {
+        padding: 10px;
+    }
+
+    li {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    footer {
+        padding: 10px;
+        font-size: 14px;
+    }
+}

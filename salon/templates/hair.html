@@ -6,6 +6,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Hair Styles Gallery</title>
   <link rel="stylesheet" href="{% static 'salon/product.css' %}" />
+  <style>
+    .pagination {
+      text-align: center;
+      margin-top: 1em;
+    }
+    .pagination button {
+      margin: 0 5px;
+      padding: 5px 10px;
+      border: none;
+      background-color: #ccc;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    .pagination button.active {
+      background-color: #4CAF50;
+      color: white;
+    }
+  </style>
 </head>
 <body>
 
@@ -23,7 +41,23 @@
     <p class="tagline">Turushusu Tukusuke</p>
   </header>
 
-  <section class="product-grid">
+  <!-- Filter Dropdown -->
+  <div style="text-align: center; margin-top: 1em;">
+    <form method="get" action="">
+      <label for="category">Filter by Category:</label>
+      <select name="category" id="category" onchange="this.form.submit()">
+        <option value="">All</option>
+        {% for cat in categories %}
+          <option value="{{ cat.id }}" {% if selected_category == cat.id|stringformat:"s" %}selected{% endif %}>
+            {{ cat.name }}
+          </option>
+        {% endfor %}
+      </select>
+    </form>
+  </div>
+
+  <!-- Hair Styles Grid -->
+  <section class="product-grid" id="hairGrid">
     {% for hair in hairstyles %}
       <div class="product-card">
         {% if hair.image %}
@@ -38,18 +72,60 @@
           <button type="submit" class="product-button">Book This Style</button>
         </form>
       </div>
+    {% empty %}
+      <p style="text-align:center; color: gray;">No hairstyles found in this category.</p>
     {% endfor %}
   </section>
+
+  <!-- Pagination Controls -->
+  <div class="pagination" id="pagination"></div>
 
   <a href="https://wa.me/+254726658111" class="whatsapp-float" target="_blank">
     <img src="https://img.icons8.com/color/48/000000/whatsapp--v1.png" alt="WhatsApp Chat" />
   </a>
 
+  <!-- Pagination Script -->
+  <script>
+    const itemsPerPage = window.innerWidth <= 768 ? 8 : 20;
+    const items = document.querySelectorAll('#hairGrid .product-card');
+    const pagination = document.getElementById('pagination');
+    let currentPage = 1;
+    const totalPages = Math.ceil(items.length / itemsPerPage);
+
+    function showPage(page) {
+      currentPage = page;
+      items.forEach((item, index) => {
+        item.style.display = (index >= (page - 1) * itemsPerPage && index < page * itemsPerPage) ? 'block' : 'none';
+      });
+      renderPagination();
+    }
+
+    function renderPagination() {
+      pagination.innerHTML = '';
+      for (let i = 1; i <= totalPages; i++) {
+        const btn = document.createElement('button');
+        btn.innerText = i;
+        btn.classList.toggle('active', i === currentPage);
+        btn.onclick = () => showPage(i);
+        pagination.appendChild(btn);
+      }
+    }
+
+    window.addEventListener('load', () => {
+      showPage(1);
+    });
+
+    // Optional: Recalculate on resize (if users rotate or resize screen)
+    window.addEventListener('resize', () => {
+      location.reload();
+    });
+  </script>
+
 </body>
 <footer>
-    <p>Follow us on:</p>
-    <a href="#">Facebook</a> | 
-    <a href="#">Instagram</a> | 
-    <a href="#">WhatsApp</a>
+  <p>Follow us on:</p>
+  <a href="#">Facebook</a> | 
+  <a href="#">Instagram</a> | 
+  <a href="#">WhatsApp</a>
 </footer>
 </html>

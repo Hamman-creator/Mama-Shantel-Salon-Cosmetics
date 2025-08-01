@@ -197,4 +197,12 @@ footer a {
   .cart-input-section input[type="date"] {
     max-width: 100%;
   }
+
+  .whatsapp-float {
+    position: fixed;
+    bottom: 110px;
+    right: 40px;
+    font-size: 20px;
+    padding: 10px 12px;
+  }
 }

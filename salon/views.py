@@ -2,23 +2,64 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from salon.forms import CustomUserCreationForm, UpdateAccountForm, GuestCheckoutForm
 from django.contrib.auth.decorators import login_required
-from .models import Booking, Order,ContactMessage,Product,Hairstyle,CartItem 
+from .models import Booking, Order,ContactMessage,Product,Hairstyle,CartItem,ProductCategory,HairstyleCategory
 from django.contrib.auth.forms import UserChangeForm, PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
 from django.utils import timezone
 from django.utils.dateparse import parse_date, parse_time
+from django.core.paginator import Paginator
 
 
 def landing_page(request):
     return render(request, 'landing.html') 
 
+ # Make sure Category is imported
+
+
+
+
 def products_page(request):
+    category_id = request.GET.get('category')
+    page_size = int(request.GET.get('page_size', 8))  # Default 8 if not provided
+    page_number = request.GET.get('page')
+
     products = Product.objects.all()
-    return render(request, 'products.html', {'products': products})
+    if category_id:
+        products = products.filter(category_id=category_id)
+
+    paginator = Paginator(products, page_size)
+    page_obj = paginator.get_page(page_number)
+
+    categories = ProductCategory.objects.all()
+
+    return render(request, 'products.html', {
+        'products': products,
+        'categories': categories,
+        'selected_category': category_id,
+    })
+
 
 def hairs_page(request):
+    category_id = request.GET.get('category')
+    page_size = int(request.GET.get('page_size', 8))  # Default 8 if not provided
+    page_number = request.GET.get('page')
+
     hairstyles = Hairstyle.objects.all()
-    return render(request, 'hair.html', {'hairstyles': hairstyles})
+    if category_id:
+        hairstyles = hairstyles.filter(category_id=category_id)
+
+    paginator = Paginator(hairstyles, page_size)
+    page_obj = paginator.get_page(page_number)
+
+    categories = HairstyleCategory.objects.all()
+
+    return render(request, 'hair.html', {
+        'hairstyles': hairstyles,
+        'categories': categories,
+        'selected_category': category_id,
+    })
+
+
 
 def custom_login(request): 
     if request.method == 'POST':

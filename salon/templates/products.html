@@ -6,7 +6,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Products Gallery</title>
   <link rel="stylesheet" href="{% static 'salon/product.css' %}" />
-  <link rel="stylesheet" href="{% static 'salon/menu.css' %}" />  <!-- NEW: Menu CSS -->
+  <link rel="stylesheet" href="{% static 'salon/menu.css' %}" />
+  <style>
+    .pagination-controls {
+      text-align: center;
+      margin: 1em 0;
+    }
+
+    .pagination-controls button {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      padding: 0.5em 1em;
+      margin: 0 0.5em;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .pagination-controls button:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+  </style>
 </head>
 <body>
 
@@ -24,7 +45,23 @@
     <p class="tagline">Jipodoe upendeze</p>
   </header>
 
-  <section class="product-grid">
+  <!-- Filter Dropdown -->
+  <div style="text-align: center; margin-top: 1em;">
+    <form method="get" action="">
+      <label for="category">Filter by Category:</label>
+      <select name="category" id="category" onchange="this.form.submit()">
+        <option value="">All</option>
+        {% for cat in categories %}
+          <option value="{{ cat.id }}" {% if selected_category == cat.id|stringformat:"s" %}selected{% endif %}>
+            {{ cat.name }}
+          </option>
+        {% endfor %}
+      </select>
+    </form>
+  </div>
+
+  <!-- Product Grid -->
+  <section class="product-grid" id="productGrid">
     {% for product in products %}
       <div class="product-card">
         <img src="{{ product.image.url }}" alt="{{ product.name }}">
@@ -37,18 +74,75 @@
           <button type="submit" class="product-button">Get This Product</button>
         </form>
       </div>
+    {% empty %}
+      <p style="text-align:center; color: gray;">No products found in this category.</p>
     {% endfor %}
   </section>
 
-  <a href="https://wa.me/+254726658111" class="whatsapp-float" target="_blank">
+  <!-- Pagination Controls -->
+  <div class="pagination-controls" id="paginationControls">
+    <button id="prevPage" onclick="changePage(-1)">Previous</button>
+    <button id="nextPage" onclick="changePage(1)">Next</button>
+  </div>
+
+  <!-- WhatsApp Floating Icon -->
+  <a href="https://wa.me/+254726658111" class="whatsapp-float" target="_blank" style="position: fixed; bottom: 1em; right: 1em;">
     <img src="https://img.icons8.com/color/48/000000/whatsapp--v1.png" alt="WhatsApp Chat" />
   </a>
 
+  <script>
+    const productCards = Array.from(document.querySelectorAll('.product-card'));
+    const productGrid = document.getElementById('productGrid');
+    const prevBtn = document.getElementById('prevPage');
+    const nextBtn = document.getElementById('nextPage');
+    const paginationControls = document.getElementById('paginationControls');
+
+    let currentPage = 1;
+    let itemsPerPage = window.innerWidth <= 768 ? 8 : 20;
+
+    function paginateProducts() {
+      itemsPerPage = window.innerWidth <= 768 ? 8 : 20;
+
+      const totalPages = Math.ceil(productCards.length / itemsPerPage);
+      const start = (currentPage - 1) * itemsPerPage;
+      const end = currentPage * itemsPerPage;
+
+      productCards.forEach((card, index) => {
+        card.style.display = (index >= start && index < end) ? 'block' : 'none';
+      });
+
+      prevBtn.disabled = currentPage === 1;
+      nextBtn.disabled = currentPage === totalPages || totalPages === 0;
+
+      if (productCards.length <= itemsPerPage) {
+        paginationControls.style.display = 'none';
+      } else {
+        paginationControls.style.display = 'block';
+      }
+    }
+
+    function changePage(direction) {
+      currentPage += direction;
+      paginateProducts();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Recalculate on resize
+    window.addEventListener('resize', () => {
+      currentPage = 1;
+      paginateProducts();
+    });
+
+    // Initial call
+    paginateProducts();
+  </script>
+
 </body>
+
 <footer>
-    <p>Follow us on:</p>
-    <a href="#">Facebook</a> | 
-    <a href="#">Instagram</a> | 
-    <a href="#">WhatsApp</a>
+  <p>Follow us on:</p>
+  <a href="#">Facebook</a> |
+  <a href="#">Instagram</a> |
+  <a href="#">WhatsApp</a>
 </footer>
 </html>

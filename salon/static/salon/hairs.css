@@ -186,4 +186,12 @@ footer a {
   .main-menu ul li {
     margin: 10px 0;
   }
+
+  .whatsapp-float {
+    position: fixed;
+    bottom: 110px;
+    right: 40px;
+    font-size: 20px;
+    padding: 10px 12px;
+  }
 }

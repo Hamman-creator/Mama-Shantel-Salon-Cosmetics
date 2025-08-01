@@ -1,3 +1,9 @@
+* {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+
 body {
   font-family: Arial, sans-serif;
   margin: 0;
@@ -246,7 +252,7 @@ footer a {
   .image-card {
     width: 90%;
     height: 300px;
-    margin: 10px 0;
+    margin: 5px 0;
   }
 
   footer {
@@ -255,14 +261,22 @@ footer a {
   }
 
   header h1 {
-    font-size: 22px;
+    font-size: 14px;
   }
 
+
   .tagline {
-    font-size: 14px;
+    font-size: 9px;
   }
 
   .menu a {
     font-size: 16px;
+  }
+   .whatsapp-float {
+    position: fixed;
+    bottom: 110px;
+    right: 40px;
+    font-size: 20px;
+    padding: 10px 12px;
   }
 }
