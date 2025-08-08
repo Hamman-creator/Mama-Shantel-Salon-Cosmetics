@@ -20,7 +20,7 @@
       <form method="POST">
         {% csrf_token %}
         
-        <label for="username">Username</label>
+        <label for="username">Phone Number</label>
         <input type="text" id="username" name="username" placeholder="Enter your phone number" required>
 
         <label for="password">Password</label>
@@ -32,6 +32,8 @@
 
         <button type="submit" class="login-button">Login</button>
       </form>
+      <p><a href="{% url 'password_reset' %}">Forgot Password?</a></p>
+
 
       <div class="signup-section">
         <p>Don’t have an account?</p>

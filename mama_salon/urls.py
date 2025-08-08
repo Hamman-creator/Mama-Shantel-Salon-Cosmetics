@@ -26,5 +26,6 @@ urlpatterns = [
     path('', include('salon.urls')),
     path('guest/book-hairstyle/<int:hairstyle_id>/', views.guest_book_hairstyle, name='guest_book_hairstyle'),
     path('guest/order-product/<int:product_id>/', views.guest_order_product, name='guest_order_product'),
+    # path('accounts/', include('django.contrib.auth.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

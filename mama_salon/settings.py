@@ -142,3 +142,9 @@ AUTHENTICATION_BACKENDS = [
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+SESSION_COOKIE_AGE = 1800
+LOGOUT_REDIRECT_URL = '/login/'
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/dashboard/'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+

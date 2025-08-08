@@ -178,6 +178,8 @@ header h1 {
   opacity: 1;
 }
 
+
+
 /* FOOTER */
 footer {
   background-color: #ffc0cb;
@@ -217,14 +219,66 @@ footer a {
 
 /* RESPONSIVE MEDIA QUERIES */
 @media (max-width: 768px) {
+  body, header, .top-section, .image-stack, .menu, 
+  .action-buttons, .image-gallery, .image-card, footer {
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
+    border-color: none;
+  }
+
   .top-section {
     flex-direction: column;
     align-items: center;
   }
 
+  header {
+    padding: 2px;
+  }
+  header h1 {
+    font-size: 20px;
+    line-height: 1.2;
+    margin: 0;
+    word-break: break-word;
+    margin-left: 0; /* prevent overflow on mobile */
+    text-align: center;
+  }
+  header .tagline {
+    font-size: 10px;
+    margin-left: 0; /* prevent overflow on mobile */
+    word-break: break-word;
+    text-align: center;
+  }
   .image-stack {
-    margin-bottom: 20px;
-    height: 250px;
+    position: relative;
+    width: 90%;
+    max-width: 300px;
+    margin: 0 auto;
+    height: 300px; /* make enough room for images */
+    overflow: hidden; /* prevent unwanted scrollbars */
+  }
+
+  .image-stack img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;          /* fill container */
+    object-fit: contain;   /* show full image without cropping */
+    opacity: 0;
+    animation: fadeCycle 8s infinite;
+  }
+
+  .image-stack img:nth-child(1) { animation-delay: 0s; }
+  .image-stack img:nth-child(2) { animation-delay: 2s; }
+  .image-stack img:nth-child(3) { animation-delay: 4s; }
+  .image-stack img:nth-child(4) { animation-delay: 6s; }
+
+  @keyframes fadeCycle {
+    0% { opacity: 1; z-index: 1; }
+    20% { opacity: 1; z-index: 1; }
+    25% { opacity: 0; z-index: 0; }
+    100% { opacity: 0; z-index: 0; }
   }
 
   .menu ul {
@@ -252,7 +306,7 @@ footer a {
   .image-card {
     width: 90%;
     height: 300px;
-    margin: 5px 0;
+    margin: 0;
   }
 
   footer {
@@ -264,7 +318,6 @@ footer a {
     font-size: 14px;
   }
 
-
   .tagline {
     font-size: 9px;
   }
@@ -272,11 +325,12 @@ footer a {
   .menu a {
     font-size: 16px;
   }
-   .whatsapp-float {
+
+  .whatsapp-float {
     position: fixed;
     bottom: 110px;
     right: 40px;
     font-size: 20px;
     padding: 10px 12px;
   }
-}
+} 

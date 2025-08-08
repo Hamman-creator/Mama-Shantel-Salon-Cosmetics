@@ -2,6 +2,9 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.conf import settings 
 from django.contrib.auth import get_user_model
+from django.utils.text import slugify
+from django.utils import timezone
+
 # Extended user profile
 class CustomUser(AbstractUser):
     phone_number = models.CharField(max_length=15, unique=True, blank=True, null=True)
@@ -123,3 +126,37 @@ class CartItem(models.Model):
     guest_location = models.CharField(max_length=255, blank=True, null=True)
 
     time = models.TimeField(null=True, blank=True)
+
+
+class BlogCategory(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+
+    def __str__(self):
+        return self.name
+
+class Blog(models.Model):
+    title = models.CharField(max_length=255)
+    category = models.ForeignKey(BlogCategory, on_delete=models.SET_NULL, null=True, blank=True, related_name='blogs')
+    main_image = models.ImageField(upload_to='blog/main_images/')
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
+
+class BlogImage(models.Model):
+    blog = models.ForeignKey(Blog, on_delete=models.CASCADE, related_name='side_images')
+    image = models.ImageField(upload_to='blog/side_images/')
+
+    def __str__(self):
+        return f"Image for {self.blog.title}"
+    
+
+
+class Review(models.Model):
+    name = models.CharField(max_length=100)
+    content = models.TextField()
+    date_posted = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return f"{self.name} - {self.date_posted.strftime('%Y-%m-%d')}"

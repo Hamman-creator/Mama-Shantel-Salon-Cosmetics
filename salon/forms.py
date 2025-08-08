@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from django.contrib.auth import get_user_model
-from .models import CustomUser,Order,Booking
+from .models import CustomUser,Order,Booking,Review
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -48,3 +48,14 @@ class GuestCheckoutForm(forms.Form):
     guest_contact = forms.CharField(max_length=100)
     guest_location = forms.CharField(max_length=255, required=False)
     preferred_time = forms.TimeField(required=True, widget=forms.TimeInput(attrs={'type': 'time'}))
+
+
+
+class ReviewForm(forms.ModelForm):
+    class Meta:
+        model = Review
+        fields = ['name', 'content']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Your Name'}),
+            'content': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Your Review'}),
+        }

@@ -5,7 +5,7 @@ body.login, .module, .dashboard-module, .grp-module {
 
 #header, .module caption, .button.default {
     background-color: #cc0066 !important; /* Mama Shantel pink */
-    color: #cc0066 !important;
+    color: #ffffff !important;
 }
 
 a, .button {
@@ -19,3 +19,42 @@ input, select, textarea {
 .button.default {
     border-radius: 8px;
 }
+
+/* === Mobile-Friendly Styles === */
+@media screen and (max-width: 768px) {
+    /* Make modules stack full width */
+    .module, .dashboard-module, .grp-module {
+        width: 100% !important;
+        margin: 10px 0 !important;
+        float: none !important;
+    }
+
+    /* Form layout */
+    .form-row, .form-row input, .form-row select, .form-row textarea {
+        display: block;
+        width: 100% !important;
+        box-sizing: border-box;
+    }
+
+    /* Center submit buttons */
+    .submit-row {
+        text-align: center;
+    }
+
+    .button, .button.default {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    /* Fix login form layout */
+    body.login #container {
+        width: 90% !important;
+        margin: 0 auto;
+    }
+
+    .form-row label {
+        display: block;
+        margin-bottom: 5px;
+    }
+}
+

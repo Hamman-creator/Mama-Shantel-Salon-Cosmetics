@@ -1,103 +1,112 @@
-     * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial; }
+/* Base Reset and Styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
 
-        body {
-            display: flex;
-            min-height: 100vh;
-            background-color: #fff0f5;
-        }
+body {
+    display: flex;
+    min-height: 100vh;
+    background-color: #fff0f5;
+}
 
-        .sidebar {
-            width: 220px;
-            background-color: #ff69b4;
-            padding: 20px;
-            color: white;
-            position: fixed;
-            height: 100%;
-        }
+/* Sidebar */
+.sidebar {
+    width: 220px;
+    background-color: #ff69b4;
+    padding: 20px;
+    color: white;
+    position: fixed;
+    height: 100%;
+    overflow-y: auto;
+}
 
-        .sidebar h2 {
-            text-align: center;
-            margin-bottom: 30px;
-        }
+.sidebar h2 {
+    text-align: center;
+    margin-bottom: 30px;
+}
 
-        .sidebar a {
-            display: block;
-            color: white;
-            text-decoration: none;
-            margin: 10px 0;
-            padding: 10px;
-            border-radius: 5px;
-        }
+.sidebar a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 5px;
+}
 
-        .sidebar a:hover {
-            background-color: #ff85c1;
-        }
+.sidebar a:hover {
+    background-color: #ff85c1;
+}
 
-        .main {
-            margin-left: 220px;
-            width: 100%;
-        }
+/* Main Area */
+.main {
+    margin-left: 220px;
+    width: 100%;
+}
 
-        .topbar {
-            background-color: #ffc0cb;
-            padding: 15px 20px;
-            font-size: 20px;
-            font-weight: bold;
-        }
+.topbar {
+    background-color: #ffc0cb;
+    padding: 15px 20px;
+    font-size: 20px;
+    font-weight: bold;
+}
 
-        .content {
-            padding: 20px;
-        }
+.content {
+    padding: 20px;
+}
 
-        h3 {
-            margin-top: 20px;
-            color: #333;
-        }
+h3 {
+    margin-top: 20px;
+    color: #333;
+}
 
-        ul {
-            margin-top: 10px;
-        }
+ul {
+    margin-top: 10px;
+}
 
-        li {
-            margin: 5px 0;
-            padding: 10px;
-            background: white;
-            border-left: 4px solid #ff69b4;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        }
+li {
+    margin: 5px 0;
+    padding: 10px;
+    background: white;
+    border-left: 4px solid #ff69b4;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
 
-        /* FOOTER */
-/* Apply Flexbox layout to ensure sticky footer */
+/* Sticky Footer Layout */
 html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
 }
 
 main {
-  flex: 1;
+    flex: 1;
 }
 
 /* Footer Styling */
 footer {
-  background-color: #ffc0cb; /* light pink */
-  text-align: center;
-  padding: 15px;
-  width: 100%;
-  box-sizing: border-box;
-  color: #b30059; /* dark pink for text */
+    background-color: #ffc0cb;
+    text-align: center;
+    padding: 15px;
+    width: 100%;
+    box-sizing: border-box;
+    color: #b30059;
 }
 
 footer a {
-  color: #b30059;
-  text-decoration: none;
-  margin: 0 10px;
+    color: #b30059;
+    text-decoration: none;
+    margin: 0 10px;
 }
 
+/* === Responsive Styles === */
 
-
+/* Tablet and Small Desktop */
 @media (max-width: 768px) {
     .sidebar {
         width: 100%;
@@ -108,11 +117,13 @@ footer a {
     }
 
     .sidebar a {
-        display: inline-block;
-        margin: 8px 5px;
-        padding: 8px 10px;
-        font-size: 14px;
+        display: block;
+        margin: 6px auto;
+        padding: 10px;
+        font-size: 15px;
         background-color: #ff85c1;
+        width: 90%;
+        max-width: 300px;
     }
 
     .main {
@@ -138,5 +149,25 @@ footer a {
     footer {
         padding: 10px;
         font-size: 14px;
+    }
+}
+
+/* Mobile Devices */
+@media (max-width: 480px) {
+    .topbar {
+        font-size: 14px;
+    }
+
+    .sidebar a {
+        font-size: 13px;
+        padding: 8px;
+    }
+
+    li {
+        font-size: 13px;
+    }
+
+    .content {
+        padding: 8px;
     }
 }

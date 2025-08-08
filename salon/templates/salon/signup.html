@@ -19,15 +19,66 @@
       <h2>Karibu, Jisajili kwa Mama Shantel</h2>
 
       {% if form.errors %}
-        <p style="color: red;">Please correct the errors below:</p>
+        <p style="color: red;">Tafadhali jaza vizuri sehemu zenye alama nyekundu:</p>
       {% endif %}
 
       <form method="POST">
         {% csrf_token %}
-        {{ form.as_p }}
+
+        <p>
+          {{ form.username.label_tag }}
+          {{ form.username }}
+          {% if form.username.errors %}
+            <span style="color:red">{{ form.username.errors.0 }}</span>
+          {% endif %}
+        </p>
+        
+        <p>
+          {{ form.phone_number.label_tag }}
+          {{ form.phone_number }}
+          {% if form.phone_number.errors %}
+            <span style="color:red">{{ form.phone_number.errors.0 }}</span>
+          {% endif %}
+        </p>
+
+
+        {% if form.email %}
+        <p>
+          {{ form.email.label_tag }}
+          {{ form.email }}
+          {% if form.email.errors %}
+            <span style="color:red">{{ form.email.errors.0 }}</span>
+          {% endif %}
+        </p>
+        {% endif %}
+
+        <p>
+          {{ form.password1.label_tag }}
+          {{ form.password1 }}
+          {% if form.password1.errors %}
+            <span style="color:red">{{ form.password1.errors.0 }}</span>
+          {% endif %}
+        </p>
+
+        <p>
+          {{ form.password2.label_tag }}
+          {{ form.password2 }}
+          {% if form.password2.errors %}
+            <span style="color:red">{{ form.password2.errors.0 }}</span>
+          {% endif %}
+        </p>
 
         <button type="submit" class="login-button">Signup</button>
       </form>
+      
+              <!-- ✅ Terms and Conditions checkbox -->
+              <p style="margin-top: 1em;">
+                <label>
+                  <input type="checkbox" name="terms" required>
+                  I agree to the <a href="{% url 'terms' %}">Terms and Conditions</a>
+                </label>
+              </p>
+      
 
       <div class="signup-section">
         <p>Already have an account?</p>

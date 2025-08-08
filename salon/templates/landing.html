@@ -1,11 +1,115 @@
-{%load static %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Mama Shantel Hair Salon</title>
-  <link rel="stylesheet" href="{%static 'salon/landing.css'%}">
+  <link rel="stylesheet" href="{% static 'salon/landing.css' %}">
+    <style>
+    .text-center {
+      text-align: center;
+    }
+
+    .text-pink {
+      color: #ff69b4;
+    }
+
+    .btn-pink {
+      background-color: #ff69b4;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .btn-pink:hover {
+      background-color: #ff85c1;
+    }
+
+    .review-form {
+      display: none;
+      margin: 0 auto;
+      max-width: 500px;
+      padding: 20px;
+      border: 1px solid #eee;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+      background-color: #fff;
+    }
+
+    .review-form input, .review-form textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .submit-btn {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .submit-btn:hover {
+      background-color: #218838;
+    }
+
+    .review-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      gap: 5px;
+      margin: 0 auto;
+    }
+
+    .review-card {
+      background-color: #fff;
+      padding: 0px;
+      border-radius: 6px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .review-card h5 {
+      margin: 0 0 10px;
+      color: #ff69b4;
+    }
+
+    .review-card small {
+      display: block;
+      margin-top: 5px;
+      color: #777;
+    }
+
+    .see-more-link {
+      display: block;
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .see-more-link a {
+      color: #ff69b4;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .see-more-link a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+      .review-grid {
+        grid-template-columns: repeat(1, 1fr);
+      }
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -23,24 +127,24 @@
 
     <nav class="menu">
       <ul>
-        <li><a href="{% url 'products'%}">Products Gallery</a></li>
-        <li><a href="{% url 'hairs'%}">Hair Gallery</a></li>
+        <li><a href="{% url 'products' %}">Products Gallery</a></li>
+        <li><a href="{% url 'hairs' %}">Hair Gallery</a></li>
         <li><a href="{% url 'login' %}">Signup/Login</a></li>
-        <li><a href="{% url 'contact'%}">Contact</a></li>
+        <li><a href="{% url 'contact' %}">Contact</a></li>
+        <li><a href="{% url 'blog_list' %}">Blog</a></li>
       </ul>
     </nav>
   </section>
 
-
   <section class="image-gallery">
     <div class="image-card">
-      <img src="{% static 'hair/Short Hair and Workout-Ready Styles_ Active….jfif'%}" alt="Hair Style 1">
+      <img src="{% static 'hair/Short Hair and Workout-Ready Styles_ Active….jfif' %}" alt="Hair Style 1">
       <div class="overlay">Trendy Braids - Our most booked style!</div>
       <h3>Trendy Braids</h3>
       <p>Perfect for all occasions</p>
     </div>
     <div class="image-card">
-      <img src="{% static 'hair/948b4c020e44d0a846dec7cbecd2fd26.jpg'%}" alt="Hair Style 2">
+      <img src="{% static 'hair/948b4c020e44d0a846dec7cbecd2fd26.jpg' %}" alt="Hair Style 2">
       <div class="overlay">Natural Curls - Enhance your natural beauty</div>
       <h3>Natural Curls</h3>
       <p>Soft, full look</p>
@@ -53,15 +157,71 @@
     </div>
   </section>
 
-  <footer>
-    <p>Follow us on:</p>
-    <a href="#">Facebook</a> | 
-    <a href="#">Instagram</a> | 
-    <a href="#">WhatsApp</a>
-  </footer>
-<a href="https://wa.me/+254726658111" class="whatsapp-float" target="_blank">
-  <img src="https://img.icons8.com/color/48/000000/whatsapp--v1.png" alt="Chat on WhatsApp" />
-</a>
+    <!-- Reviews Section -->
+      <section class="container mt-5 mb-5">
+        <h2 class="text-center text-pink mb-4">Reviews</h2>
 
+        <!-- Leave Review Button -->
+        <div class="text-center mb-4">
+          <button class="btn-pink" onclick="toggleReviewForm()">Leave a Review</button>
+        </div>
+
+        <!-- Review Form (Hidden by default) -->
+        <div id="reviewForm" class="review-form">
+          <form method="POST" action="{% url 'submit_review' %}">
+            {% csrf_token %}
+            <label for="name">Your Name</label>
+            <input type="text" name="name" id="name" required>
+
+            <label for="content">Your Review</label>
+            <textarea name="content" id="content" rows="4" required></textarea>
+
+            <button type="submit" class="submit-btn" onclick="hideReviewForm()">Submit Review</button>
+          </form>
+        </div>
+
+        <!-- Display up to 4 Reviews -->
+        <div class="review-grid">
+          {% for review in reviews|slice:"0:4" %}
+          <div class="review-card">
+            <h5>{{ review.name }}</h5>
+            <p>{{ review.content }}</p>
+            <small>{{ review.date_posted|date:"F j, Y, g:i a" }}</small>
+          </div>
+          {% empty %}
+          <p class="text-center">No reviews yet. Be the first!</p>
+          {% endfor %}
+        </div>
+
+        <!-- See More Reviews Link -->
+        <div class="see-more-link">
+          <a href="{% url 'all_reviews' %}">See more reviews →</a>
+        </div>
+      </section>
+        <footer>
+          <p>Follow us on:</p>
+          <a href="#">Facebook</a> | 
+          <a href="#">Instagram</a> | 
+          <a href="#">WhatsApp</a>
+        </footer>
+
+        <a href="https://wa.me/+254726658111" class="whatsapp-float" target="_blank">
+          <img src="https://img.icons8.com/color/48/000000/whatsapp--v1.png" alt="Chat on WhatsApp" />
+        </a>
+
+  <script>
+    function toggleReviewForm() {
+      const form = document.getElementById('reviewForm');
+      form.style.display = (form.style.display === 'block') ? 'none' : 'block';
+    }
+
+    function hideReviewForm() {
+      setTimeout(() => {
+        document.getElementById('reviewForm').style.display = 'none';
+      }, 200); 
+    }
+
+    
+  </script>
 </body>
 </html>

@@ -1,19 +1,42 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
-from salon.forms import CustomUserCreationForm, UpdateAccountForm, GuestCheckoutForm
+from salon.forms import CustomUserCreationForm, UpdateAccountForm, GuestCheckoutForm,ReviewForm
 from django.contrib.auth.decorators import login_required
-from .models import Booking, Order,ContactMessage,Product,Hairstyle,CartItem,ProductCategory,HairstyleCategory
+from .models import Booking, Order,ContactMessage,Product,Hairstyle,CartItem,ProductCategory,HairstyleCategory,BlogCategory,Blog,BlogImage,Review
 from django.contrib.auth.forms import UserChangeForm, PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
 from django.utils import timezone
 from django.utils.dateparse import parse_date, parse_time
 from django.core.paginator import Paginator
+from datetime import timedelta
 
+from django.utils import timezone
+from django.shortcuts import render, redirect
+from .forms import ReviewForm
+from .models import Review
 
 def landing_page(request):
-    return render(request, 'landing.html') 
+    if request.method == 'POST':
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.date_posted = timezone.now()
+            review.save()
+            return redirect('landing')
 
- # Make sure Category is imported
+    else:
+        form = ReviewForm()
+
+    reviews = Review.objects.all().order_by('-date_posted')[:4]  # Only latest 4
+
+    return render(request, 'landing.html', {
+        'form': form,
+        'reviews': reviews,
+    })
+
+
+
+
 
 
 
@@ -68,17 +91,20 @@ def custom_login(request):
         user = authenticate(request, phone_number=phone_number, password=password)
         if user is not None:
             login(request, user)
-            return redirect('dashboard')
+            if user.is_superuser or user.is_staff:
+                return redirect('/admin/')  # Redirect admin users to Django admin panel
+            return redirect('dashboard')  # Regular users go to their dashboard
         else:
             return render(request, 'salon/login.html', {'error': 'Invalid credentials'})
     return render(request, 'salon/login.html')
+
 
 def signup(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('login')
+            return redirect('dashboard')
     else:
         form = CustomUserCreationForm()
     return render(request, 'salon/signup.html', {'form': form})
@@ -432,8 +458,54 @@ def thank_you(request):
     return render(request, 'salon/thank_you.html')
 
 
+def blog_list(request):
+    category_id = request.GET.get('category')
+    blogs = Blog.objects.all().order_by('-created_at')
+
+    
+    if category_id:
+        blogs = blogs.filter(category__id=category_id)
+
+    
+    last_week = timezone.now() - timedelta(days=7)
+    recent_blogs = Blog.objects.filter(created_at__gte=last_week).order_by('-created_at')
+
+    categories = BlogCategory.objects.all()
+
+    context = {
+        'blogs': blogs,
+        'recent_blogs': recent_blogs,
+        'categories': categories,
+    }
+    return render(request, 'salon/blog_list.html', context)
 
 
+
+
+def blog_detail(request, pk):
+    blog = get_object_or_404(Blog, pk=pk)
+    return render(request, 'salon/blog_details.html', {'blog': blog})
+
+
+def submit_review(request):
+    if request.method == 'POST':
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('landing') 
+    return redirect('landing')
+
+
+def all_reviews_page(request):
+    all_reviews = Review.objects.all().order_by('-date_posted')
+    paginator = Paginator(all_reviews, 16)  # 16 per page for desktop
+
+    page_number = request.GET.get('page')
+    page_reviews = paginator.get_page(page_number)
+
+    return render(request, 'salon/all_reviews.html', {
+        'reviews': page_reviews,
+    })
 
 # def product_gallery(request):
 #     products = Product.objects.all()
